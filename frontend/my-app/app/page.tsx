@@ -1,5 +1,6 @@
 // import Image from "next/image";
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { StakingUI } from '../components/StakingUI';
 
 export default function Home() {
   return (
@@ -8,6 +9,8 @@ export default function Home() {
         <ConnectButton />
       </div>
       <h1 className="text-4xl font-bold">Staking dApp</h1>
+      <br />
+      <StakingUI />
     </main>
   );
 }
