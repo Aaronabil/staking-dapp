@@ -100,7 +100,7 @@ export default function HeroSection() {
                                     <div className="flex">
                                         <img
                                             className="mx-auto h-5 w-fit dark:invert"
-                                            src="https://github.com/Aaronabil/staking-dapp/blob/main/frontend/my-app/public/etherium.svg?raw=true"
+                                            src="https://github.com/Aaronabil/staking-dapp/blob/main/frontend/my-app/public/ethereum.svg?raw=true"
                                             alt="Etherium Logo"
                                             height="20"
                                             width="auto"
