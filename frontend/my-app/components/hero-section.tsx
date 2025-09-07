@@ -15,8 +15,8 @@ export default function HeroSection() {
                     <div className="pb-24 pt-12 md:pb-32 lg:pb-56 lg:pt-44">
                         <div className="relative mx-auto flex max-w-6xl flex-col px-6 lg:block">
                             <div className="mx-auto max-w-lg text-center lg:ml-0 lg:w-1/2 lg:text-left">
-                                <h1 className="mt-8 max-w-2xl text-balance text-5xl font-medium md:text-6xl lg:mt-16 xl:text-7xl">Ship 10x Faster with NS</h1>
-                                <p className="mt-8 max-w-2xl text-pretty text-lg">Highly customizable components for building modern websites and applications that look and feel the way you mean it.</p>
+                                <h1 className="mt-8 max-w-2xl text-balance text-5xl font-medium md:text-6xl lg:mt-16 xl:text-7xl">Grow Your Digital Assets, Automatically</h1>
+                                <p className="mt-8 max-w-2xl text-pretty text-lg">Connect your wallet, stake your tokens, and watch your rewards grow in real-time, every second.</p>
 
                                 <div className="mt-12 flex flex-col items-center justify-center gap-2 sm:flex-row lg:justify-start">
                                     <Button
@@ -24,7 +24,7 @@ export default function HeroSection() {
                                         size="lg"
                                         className="px-5 text-base">
                                         <Link href="#link">
-                                            <span className="text-nowrap">Start Building</span>
+                                            <span className="text-nowrap">Start Staking</span>
                                         </Link>
                                     </Button>
                                     <Button
@@ -34,7 +34,7 @@ export default function HeroSection() {
                                         variant="ghost"
                                         className="px-5 text-base">
                                         <Link href="#link">
-                                            <span className="text-nowrap">Request a demo</span>
+                                            <span className="text-nowrap">How It Works</span>
                                         </Link>
                                     </Button>
                                 </div>
@@ -63,8 +63,8 @@ export default function HeroSection() {
                                     <div className="flex">
                                         <img
                                             className="mx-auto h-5 w-fit dark:invert"
-                                            src="https://html.tailus.io/blocks/customers/nvidia.svg"
-                                            alt="Nvidia Logo"
+                                            src="https://html.tailus.io/blocks/customers/vercel.svg"
+                                            alt="Vercel Logo"
                                             height="20"
                                             width="auto"
                                         />
@@ -73,8 +73,8 @@ export default function HeroSection() {
                                     <div className="flex">
                                         <img
                                             className="mx-auto h-4 w-fit dark:invert"
-                                            src="https://html.tailus.io/blocks/customers/column.svg"
-                                            alt="Column Logo"
+                                            src="https://etherscan.io/images/brandassets/etherscan-logo.svg"
+                                            alt="Etherscan Logo"
                                             height="16"
                                             width="auto"
                                         />
@@ -91,7 +91,7 @@ export default function HeroSection() {
                                     <div className="flex">
                                         <img
                                             className="mx-auto h-5 w-fit dark:invert"
-                                            src="https://html.tailus.io/blocks/customers/nike.svg"
+                                            src=""
                                             alt="Nike Logo"
                                             height="20"
                                             width="auto"

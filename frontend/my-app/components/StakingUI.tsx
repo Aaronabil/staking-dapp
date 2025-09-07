@@ -122,9 +122,9 @@ export function StakingUI() {
 
     if (!isConnected) {
         return (
-            <div className="bg-slate-800 p-8 rounded-xl shadow-lg text-center w-full max-w-md">
-                <h2 className="text-2xl font-bold mb-4">Selamat Datang</h2>
-                <p className="text-slate-400">Silakan hubungkan dompet Anda untuk memulai.</p>
+            <div className="bg-slate-800 p-8 md:p-12 rounded-xl shadow-lg text-center w-full max-w-md">
+                <h2 className="text-2xl font-bold md:text-2xl mb-4">Welcome to the Staking dApps</h2>
+                <p className="text-slate-400 text-lg">Please connect your MetaMask or any Wallet to log in.</p>
             </div>
         );
     }

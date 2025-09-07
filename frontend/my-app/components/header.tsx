@@ -8,9 +8,9 @@ import React from 'react'
 
 const menuItems = [
     { name: 'Features', href: '#link' },
-    { name: 'Solution', href: '#link' },
-    { name: 'Pricing', href: '#link' },
-    { name: 'About', href: '#link' },
+    { name: 'Integrations', href: '#link' },
+    { name: 'Staking', href: '#link' },
+    { name: 'FAQ', href: '#link' },
 ]
 
 export const HeroHeader = () => {
