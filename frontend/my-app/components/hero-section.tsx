@@ -73,7 +73,7 @@ export default function HeroSection() {
                                     <div className="flex">
                                         <img
                                             className="mx-auto h-4 w-fit dark:invert"
-                                            src="https://etherscan.io/images/brandassets/etherscan-logo.svg"
+                                            src="https://github.com/Aaronabil/staking-dapp/blob/main/frontend/my-app/public/etherscan.svg?raw=true"
                                             alt="Etherscan Logo"
                                             height="16"
                                             width="auto"
@@ -100,8 +100,8 @@ export default function HeroSection() {
                                     <div className="flex">
                                         <img
                                             className="mx-auto h-5 w-fit dark:invert"
-                                            src="https://html.tailus.io/blocks/customers/lemonsqueezy.svg"
-                                            alt="Lemon Squeezy Logo"
+                                            src="https://github.com/Aaronabil/staking-dapp/blob/main/frontend/my-app/public/etherium.svg?raw=true"
+                                            alt="Etherium Logo"
                                             height="20"
                                             width="auto"
                                         />
@@ -109,8 +109,8 @@ export default function HeroSection() {
                                     <div className="flex">
                                         <img
                                             className="mx-auto h-4 w-fit dark:invert"
-                                            src="https://html.tailus.io/blocks/customers/laravel.svg"
-                                            alt="Laravel Logo"
+                                            src="https://github.com/Aaronabil/staking-dapp/blob/main/frontend/my-app/public/hardhat.svg?raw=true"
+                                            alt="Hardhat Logo"
                                             height="16"
                                             width="auto"
                                         />
@@ -118,8 +118,8 @@ export default function HeroSection() {
                                     <div className="flex">
                                         <img
                                             className="mx-auto h-7 w-fit dark:invert"
-                                            src="https://html.tailus.io/blocks/customers/lilly.svg"
-                                            alt="Lilly Logo"
+                                            src="https://github.com/Aaronabil/staking-dapp/blob/main/frontend/my-app/public/googlegemini.svg?raw=true"
+                                            alt="Gemini Logo"
                                             height="28"
                                             width="auto"
                                         />
