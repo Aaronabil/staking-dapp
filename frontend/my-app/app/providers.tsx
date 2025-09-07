@@ -1,7 +1,7 @@
 'use client';
 
 import '@rainbow-me/rainbowkit/styles.css';
-import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { getDefaultConfig, RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
 import {
     metaMaskWallet,
     walletConnectWallet,
@@ -41,7 +41,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     return (
         <WagmiProvider config={config}>
             <QueryClientProvider client={queryClient}>
-                <RainbowKitProvider modalSize="compact">
+                <RainbowKitProvider modalSize="compact" theme={darkTheme()}>
                     {children}
                 </RainbowKitProvider>
             </QueryClientProvider>
