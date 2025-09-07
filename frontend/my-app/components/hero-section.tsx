@@ -72,10 +72,10 @@ export default function HeroSection() {
 
                                     <div className="flex">
                                         <img
-                                            className="mx-auto h-4 w-fit dark:invert"
+                                            className="mx-auto h-5 w-fit dark:invert"
                                             src="https://github.com/Aaronabil/staking-dapp/blob/main/frontend/my-app/public/etherscan.svg?raw=true"
                                             alt="Etherscan Logo"
-                                            height="16"
+                                            height="20"
                                             width="auto"
                                         />
                                     </div>
@@ -90,28 +90,28 @@ export default function HeroSection() {
                                     </div>
                                     <div className="flex">
                                         <img
-                                            className="mx-auto h-5 w-fit dark:invert"
+                                            className="mx-auto h-7 w-fit dark:invert"
                                             src="https://github.com/Aaronabil/staking-dapp/blob/main/frontend/my-app/public/MetaMask-logo-black.svg?raw=true"
                                             alt="Metamask Logo"
-                                            height="20"
+                                            height="28"
                                             width="auto"
                                         />
                                     </div>
                                     <div className="flex">
                                         <img
-                                            className="mx-auto h-5 w-fit dark:invert"
+                                            className="mx-auto h-7 w-fit dark:invert"
                                             src="https://github.com/Aaronabil/staking-dapp/blob/main/frontend/my-app/public/ethereum.svg?raw=true"
                                             alt="Etherium Logo"
-                                            height="20"
+                                            height="28"
                                             width="auto"
                                         />
                                     </div>
                                     <div className="flex">
                                         <img
-                                            className="mx-auto h-4 w-fit dark:invert"
+                                            className="mx-auto h-7 w-fit dark:invert"
                                             src="https://github.com/Aaronabil/staking-dapp/blob/main/frontend/my-app/public/hardhat.svg?raw=true"
                                             alt="Hardhat Logo"
-                                            height="16"
+                                            height="28"
                                             width="auto"
                                         />
                                     </div>
