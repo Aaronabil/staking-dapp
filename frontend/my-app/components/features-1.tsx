@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { Settings2, Sparkles, Zap } from 'lucide-react'
+import { Gift, DatabaseZap, ShieldCheck } from 'lucide-react'
 import { ReactNode } from 'react'
 
 export default function Features() {
@@ -7,58 +7,58 @@ export default function Features() {
         <section className="py-16 md:py-32">
             <div className="@container mx-auto max-w-5xl px-6">
                 <div className="text-center">
-                    <h2 className="text-balance text-4xl font-semibold lg:text-5xl">Built to cover your needs</h2>
-                    <p className="mt-4">Libero sapiente aliquam quibusdam aspernatur, praesentium iusto repellendus.</p>
+                    <h2 className="text-balance text-4xl font-semibold lg:text-5xl">A Smarter Way to Grow Your Assets</h2>
+                    <p className="mt-4">Discover the benefits of our secure and transparent staking protocol.</p>
                 </div>
                 <div className="@min-4xl:max-w-full @min-4xl:grid-cols-3 mx-auto mt-8 grid max-w-sm gap-6 [--color-background:var(--color-muted)] [--color-card:var(--color-muted)] *:text-center md:mt-16 dark:[--color-muted:var(--color-zinc-900)]">
                     <Card className="group border-0 shadow-none">
                         <CardHeader className="pb-3">
                             <CardDecorator>
-                                <Zap
+                                <Gift
                                     className="size-6"
                                     aria-hidden
                                 />
                             </CardDecorator>
 
-                            <h3 className="mt-6 font-medium">Customizable</h3>
+                            <h3 className="mt-6 font-medium">Earn Rewards Passively</h3>
                         </CardHeader>
 
                         <CardContent>
-                            <p className="text-sm">Extensive customization options, allowing you to tailor every aspect to meet your specific needs.</p>
+                            <p className="text-sm">Stake your STK tokens and receive RWD rewards every second. The longer you stake, the more you earn.</p>
                         </CardContent>
                     </Card>
 
                     <Card className="group border-0 shadow-none">
                         <CardHeader className="pb-3">
                             <CardDecorator>
-                                <Settings2
+                                <ShieldCheck
                                     className="size-6"
                                     aria-hidden
                                 />
                             </CardDecorator>
 
-                            <h3 className="mt-6 font-medium">You have full control</h3>
+                            <h3 className="mt-6 font-medium">Full Control & Security</h3>
                         </CardHeader>
 
                         <CardContent>
-                            <p className="mt-3 text-sm">From design elements to functionality, you have complete control to create a unique and personalized experience.</p>
+                            <p className="mt-3 text-sm">Interact directly from your own wallet. Our smart contract is transparent and you always have full custody of your assets.</p>
                         </CardContent>
                     </Card>
 
                     <Card className="group border-0 shadow-none">
                         <CardHeader className="pb-3">
                             <CardDecorator>
-                                <Sparkles
+                                <DatabaseZap
                                     className="size-6"
                                     aria-hidden
                                 />
                             </CardDecorator>
 
-                            <h3 className="mt-6 font-medium">Powered By AI</h3>
+                            <h3 className="mt-6 font-medium">Transparent & On-Chain</h3>
                         </CardHeader>
 
                         <CardContent>
-                            <p className="mt-3 text-sm">Elements to functionality, you have complete control to create a unique experience.</p>
+                            <p className="mt-3 text-sm">Every transaction, from staking to claiming rewards, is recorded on the public blockchain for anyone to verify.</p>
                         </CardContent>
                     </Card>
                 </div>
