@@ -3,8 +3,8 @@ import { type SVGProps } from 'react'
 export default function Trustwallet(props: SVGProps<SVGSVGElement>) {
     return (
         <svg
-            width="1em"
-            height="1em"
+            width="2497"
+            height="2497"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 2497 2497"
             {...props}

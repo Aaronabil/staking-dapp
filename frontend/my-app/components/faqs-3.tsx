@@ -8,40 +8,90 @@ type FAQItem = {
     id: string
     icon: IconName
     question: string
-    answer: string
+    answer: React.ReactNode
 }
 
 export default function FAQsThree() {
     const faqItems: FAQItem[] = [
         {
             id: 'item-1',
-            icon: 'clock',
-            question: 'What are your business hours?',
-            answer: 'Our customer service team is available Monday through Friday from 9:00 AM to 8:00 PM EST, and weekends from 10:00 AM to 6:00 PM EST. During holidays, hours may vary and will be posted on our website.',
+            icon: 'square-stack',
+            question: 'What is staking?',
+            answer: 'Staking is similar to a savings deposit at a bank. You "lock" your STK tokens in our smart contract. In return for helping to secure and support the ecosystem, you will continuously receive rewards in RWD tokens.',
         },
         {
             id: 'item-2',
-            icon: 'credit-card',
-            question: 'How do subscription payments work?',
-            answer: 'Subscription payments are automatically charged to your default payment method on the same day each month or year, depending on your billing cycle. You can update your payment information and view billing history in your account dashboard.',
+            icon: 'circle-play',
+            question: 'How do I get started?',
+            answer: (
+                <>
+                    <div>Its easy! Just follow these four steps:</div>
+
+                    <ol className="list-decimal list-inside space-y-2 mt-4 text-left">
+                        <li>
+                            <strong>Get STK Tokens:</strong> Make sure you have a StakeToken (STK) balance in your wallet. For now on the testnet, these tokens are minted by the contract owner.
+                        </li>
+                        <li>
+                            <strong>Connect Wallet:</strong> Click the Connect Wallet button to connect your Web3 wallet (like MetaMask).
+                        </li>
+                        <li>
+                            <strong>Approve & Stake:</strong> Enter the amount of STK you wish to stake. You will be prompted for two transactions: first to Approve (giving the contract permission to use your STK) and second to Stake (depositing your STK into the contract).
+                        </li>
+                        <li>
+                            <strong>Done!</strong> You will immediately start earning RWD rewards every second.
+                        </li>
+                    </ol>
+                </>
+            ),
         },
         {
             id: 'item-3',
-            icon: 'truck',
-            question: 'Can I expedite my shipping?',
-            answer: 'Yes, we offer several expedited shipping options at checkout. Next-day and 2-day shipping are available for most U.S. addresses if orders are placed before 2:00 PM EST. International expedited shipping options vary by destination.',
+            icon: 'gift',
+            question: 'How are rewards calculated?',
+            answer: (
+                <>
+                    <div>Rewards are calculated in real-time based on two main factors:</div>
+                    <ol className="list-decimal list-inside space-y-2 mt-4 text-left">
+                        <li>
+                            The amount of STK tokens you have staked.
+                        </li>
+                        <li>
+                            The duration of your stake.
+                        </li>
+                    </ol>
+                    <br />
+                    <div>The more you stake and the longer you stake, the more RWD rewards you will accumulate.</div>
+                </>
+            ),
         },
         {
             id: 'item-4',
-            icon: 'globe',
-            question: 'Do you offer localized support?',
-            answer: 'We offer multilingual support in English, Spanish, French, German, and Japanese. Our support team can assist customers in these languages via email, chat, and phone during standard business hours for each respective region.',
+            icon: 'coins',
+            question: 'Whats the difference between STK and RWD tokens?',
+            answer: (
+                <>
+                    <ul className="list-disc list-inside space-y-2 text-left">
+                        <li>
+                            STK (Stake Token): This is your principal token. Its the asset you lock into the platform.
+                        </li>
+                        <li>
+                            RWD (Reward Token): This is your yield token. Its the asset you earn as a reward for staking.
+                        </li>
+                    </ul>
+                </>
+            ),
         },
         {
             id: 'item-5',
-            icon: 'package',
-            question: 'How do I track my order?',
-            answer: 'Once your order ships, you\'ll receive a confirmation email with a tracking number. You can use this number on our website or the carrier\'s website to track your package. You can also view order status and tracking information in your account dashboard under "Order History".',
+            icon: 'banknote-arrow-down',
+            question: 'Can I withdraw my tokens at any time?',
+            answer: 'Yes. Our dApp has no lock-up period. You can unstake some or all of your STK tokens at any time. When you unstake, any pending RWD rewards will also be automatically claimed to your wallet.',
+        },
+        {
+            id: 'item-6',
+            icon: 'lock',
+            question: 'Is this secure?',
+            answer: 'Our platform runs entirely on decentralized smart contracts on the Ethereum blockchain. All logic and transactions are transparent and publicly verifiable on Etherscan. You always maintain full control of your assets through your personal wallet.',
         },
     ]
 
