@@ -4,6 +4,10 @@ import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { useAccount, useBalance, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { stakeTokenAddress, stakeTokenAbi, stakingAddress, stakingAbi, rewardTokenAddress } from '../lib/contracts';
+import { GlowEffect } from './motion-primitives/glow-effect';
+import { Input, InputAddon, InputGroup } from '@/components/ui/input';
+import { Euro } from 'lucide-react';
+import { Button } from '@/components/ui/button'
 
 export function StakingUI() {
     const { address, isConnected } = useAccount();
@@ -122,9 +126,34 @@ export function StakingUI() {
 
     if (!isConnected) {
         return (
-            <div className="bg-slate-800 p-8 md:p-12 rounded-xl shadow-lg text-center w-full max-w-md">
-                <h2 className="text-2xl font-bold md:text-2xl mb-4">Welcome to the Staking dApps</h2>
-                <p className="text-slate-400 text-lg">Please connect your MetaMask or any Wallet to log in.</p>
+            <div className="relative w-full max-w-md rounded-xl p-0.5">
+                <GlowEffect
+                    colors={['#FFFFFF', '#A0A0A0', '#FFFFFF']}
+                    mode='rotate'
+                    blur='strong'
+                    className="rounded-xl"
+                />
+
+                <div className="relative bg-zinc-950 p-8 md:p-12 rounded-xl shadow-lg text-center h-full w-full">
+                    <h2 className="text-2xl font-bold md:text-2xl mb-4">Welcome to the Staking dApps</h2>
+                    <p className="text-slate-400 text-lg">Please connect your MetaMask or any Wallet to log in.</p>
+
+                    <svg
+                        role='img'
+                        xmlns='http://www.w3.org/2000/svg'
+                        viewBox='0 0 70 70'
+                        aria-label='MP Logo'
+                        className='absolute bottom-4 right-4 h-8 w-8 text-white'
+                        fill='none'
+                    >
+                        <path
+                            stroke='currentColor'
+                            strokeLinecap='round'
+                            strokeWidth='3'
+                            d='M51.883 26.495c-7.277-4.124-18.08-7.004-26.519-7.425-2.357-.118-4.407-.244-6.364 1.06M59.642 51c-10.47-7.25-26.594-13.426-39.514-15.664-3.61-.625-6.744-1.202-9.991.263'
+                        ></path>
+                    </svg>
+                </div>
             </div>
         );
     }
@@ -135,68 +164,78 @@ export function StakingUI() {
     const isInteracting = isApproving || isStaking || isUnstaking || isClaiming;
 
     return (
-        <div className="bg-slate-800 p-8 rounded-xl shadow-lg w-full max-w-md">
-            <h2 className="text-2xl font-bold mb-6 text-center">Stake Your Tokens</h2>
-
-            <div className="space-y-4 mb-6 text-sm">
-                <div className="flex justify-between">
-                    <span className="text-slate-400">Saldo STK Anda:</span>
-                    <span className="font-bold">
-                        {`${parseFloat(stakeTokenBalance?.formatted || '0').toFixed(2)} STK`}
-                    </span>
+        <div className="relative w-full max-w-md">
+            <GlowEffect
+                colors={['#FFFFFF', '#A0A0A0', '#FFFFFF']}
+                mode='pulse'
+                blur='strong'
+                className="rounded-xl"
+            />
+            <div className="relative bg-zinc-950 p-8 rounded-xl shadow-lg w-full">
+                <h2 className="text-2xl font-bold mb-6 text-center">Stake Your Tokens</h2>
+                <div className="space-y-4 mb-6 text-sm">
+                    <div className="flex justify-between">
+                        <span className="text-slate-400">Your STK Balance:</span>
+                        <span className="font-bold">
+                            {`${parseFloat(stakeTokenBalance?.formatted || '0').toFixed(2)} STK`}
+                        </span>
+                    </div>
+                    <div className="flex justify-between">
+                        <span className="text-slate-400">Amount Stake:</span>
+                        <span className="font-bold">
+                            {`${ethers.formatEther(stakedAmountFormatted)} STK`}
+                        </span>
+                    </div>
+                    <div className="flex justify-between">
+                        <span className="text-slate-400">Your Reward:</span>
+                        <span className="font-bold text-emerald-400">
+                            {`${ethers.formatEther(pendingRewardFormatted)} RWD`}
+                        </span>
+                    </div>
                 </div>
-                <div className="flex justify-between">
-                    <span className="text-slate-400">Jumlah Di-stake:</span>
-                    <span className="font-bold">
-                        {`${ethers.formatEther(stakedAmountFormatted)} STK`}
-                    </span>
-                </div>
-                <div className="flex justify-between">
-                    <span className="text-slate-400">Hadiah Anda:</span>
-                    <span className="font-bold text-emerald-400">
-                        {`${ethers.formatEther(pendingRewardFormatted)} RWD`}
-                    </span>
-                </div>
-            </div>
-
-            <div className="space-y-4">
-                <div>
-                    <label htmlFor="stakeAmount" className="block text-sm font-medium text-slate-300 mb-1">
-                        Jumlah Stake / Unstake
-                    </label>
-                    <input
-                        type="number"
-                        id="stakeAmount"
-                        className="w-full bg-slate-700 border border-slate-600 rounded-md p-2 focus:ring-2 focus:ring-sky-500 focus:outline-none"
-                        placeholder="0.0"
-                        value={stakeAmount}
-                        onChange={(e) => setStakeAmount(e.target.value)}
+                <div className="space-y-4">
+                    <div>
+                        <label htmlFor="stakeAmount" className="block text-sm font-medium text-slate-300 mb-1">
+                            Stake / Unstake Amount
+                        </label>
+                        <InputGroup>
+                            <InputAddon mode="icon">
+                                <Euro />
+                            </InputAddon>
+                            <Input
+                                type="number"
+                                id="stakeAmount"
+                                placeholder="0.0"
+                                value={stakeAmount}
+                                onChange={(e) => setStakeAmount(e.target.value)}
+                                disabled={isInteracting}
+                            />
+                        </InputGroup>
+                    </div>
+                    <div className="flex space-x-4">
+                        <Button
+                            onClick={handleStake}
+                            disabled={isInteracting}
+                            className="flex-1 px-5 text-base">
+                            {isApproving ? 'Approving...' : isConfirmingApprove ? 'Confirming...' : isStaking ? 'Staking...' : isConfirmingStake ? 'Confirming...' : 'Stake'}
+                        </Button>
+                        <Button
+                            onClick={handleUnstake}
+                            disabled={isInteracting}
+                            variant="destructive"
+                            className="flex-1 px-5 text-base">
+                            {isUnstaking ? 'Unstaking...' : isConfirmingUnstake ? 'Confirming...' : 'Unstake'}
+                        </Button>
+                    </div>
+                    <Button
+                        onClick={handleClaimReward}
                         disabled={isInteracting}
-                    />
-                </div>
-                <div className="flex space-x-4">
-                    <button
-                        className="flex-1 bg-sky-600 hover:bg-sky-700 rounded-md py-2 font-semibold transition disabled:bg-slate-500 disabled:cursor-not-allowed"
-                        onClick={handleStake}
-                        disabled={isInteracting}
+                        variant="secondary"
+                        className="w-full"
                     >
-                        {isApproving ? 'Approving...' : isStaking ? 'Staking...' : 'Stake'}
-                    </button>
-                    <button
-                        className="flex-1 bg-slate-600 hover:bg-slate-700 rounded-md py-2 font-semibold transition disabled:bg-slate-500 disabled:cursor-not-allowed"
-                        onClick={handleUnstake}
-                        disabled={isInteracting}
-                    >
-                        {isUnstaking ? 'Unstaking...' : 'Unstake'}
-                    </button>
+                        {isClaiming ? 'Claiming...' : isConfirmingClaim ? 'Confirming...' : 'Claim Reward'}
+                    </Button>
                 </div>
-                <button
-                    className="w-full bg-emerald-600 hover:bg-emerald-700 rounded-md py-2 font-semibold transition disabled:bg-slate-500 disabled:cursor-not-allowed"
-                    onClick={handleClaimReward}
-                    disabled={isInteracting}
-                >
-                    {isClaiming ? 'Claiming...' : 'Claim Reward'}
-                </button>
             </div>
         </div>
     );
