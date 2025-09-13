@@ -15,7 +15,7 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 const config = getDefaultConfig({
     appName: 'My Staking dApp',
-    projectId: '25114afadb465573a21832ab14bb32e8',
+    projectId: process.env.NEXT_PUBLIC_PROJECT_ID!,
     chains: [sepolia],
     wallets: [
         {
@@ -38,8 +38,8 @@ const config = getDefaultConfig({
 const queryClient = new QueryClient();
 
 const myTheme = darkTheme({
-    accentColor: '#fafafa', 
-    accentColorForeground: 'black', 
+    accentColor: '#fafafa',
+    accentColorForeground: 'black',
     borderRadius: 'medium',
     fontStack: 'system',
 });

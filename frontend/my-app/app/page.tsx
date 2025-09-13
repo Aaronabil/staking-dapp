@@ -9,12 +9,18 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <Features />
-      <IntegrationsSection />
-      <section className="flex w-full flex-col items-center justify-center py-12 md:py-32 px-6">
+      <section id="features">
+        <Features />
+      </section>
+      <section id="integrations">
+        <IntegrationsSection />
+      </section>
+      <section id="staking" className="flex w-full flex-col items-center justify-center py-12 md:py-32 px-6">
         <StakingUI />
       </section>
-      <FAQsThree />
+      <section id="faq">
+        <FAQsThree />
+      </section>
       <FooterSection />
     </>
   );

@@ -7,10 +7,10 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import React from 'react'
 
 const menuItems = [
-    { name: 'Features', href: '#link' },
-    { name: 'Integrations', href: '#link' },
-    { name: 'Staking', href: '#link' },
-    { name: 'FAQ', href: '#link' },
+    { name: 'Features', href: '#features' },
+    { name: 'Integrations', href: '#integrations' },
+    { name: 'Staking', href: '#staking' },
+    { name: 'FAQ', href: '#faq' },
 ]
 
 export const HeroHeader = () => {
