@@ -1,13 +1,16 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ethers } from 'ethers';
 import { useAccount, useBalance, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { stakeTokenAddress, stakeTokenAbi, stakingAddress, stakingAbi, rewardTokenAddress } from '../lib/contracts';
 import { GlowEffect } from './motion-primitives/glow-effect';
 import { Input, InputAddon, InputGroup } from '@/components/ui/input';
-import { Euro } from 'lucide-react';
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/button';
+import toast from 'react-hot-toast';
+import { Alert, AlertIcon, AlertTitle } from '@/components/ui/alert';
+import { RiCheckboxCircleFill, RiErrorWarningFill, RiCopperCoinLine } from '@remixicon/react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export function StakingUI() {
     const { address, isConnected } = useAccount();
@@ -46,55 +49,180 @@ export function StakingUI() {
     const { data: unstakeHash, isPending: isUnstaking, writeContractAsync: unstakeAsync } = useWriteContract();
     const { data: claimHash, isPending: isClaiming, writeContractAsync: claimAsync } = useWriteContract();
 
-    const { isLoading: isConfirmingApprove } = useWaitForTransactionReceipt({ hash: approveHash });
+    const { isLoading: isConfirmingApprove, isSuccess, isApproveSuccess } = useWaitForTransactionReceipt({ hash: approveHash });
     const { isLoading: isConfirmingStake, isSuccess: isStakeSuccess } = useWaitForTransactionReceipt({ hash: stakeHash });
     const { isLoading: isConfirmingUnstake, isSuccess: isUnstakeSuccess } = useWaitForTransactionReceipt({ hash: unstakeHash });
     const { isLoading: isConfirmingClaim, isSuccess: isClaimSuccess } = useWaitForTransactionReceipt({ hash: claimHash });
 
+    const refetchAllData = useCallback(() => {
+        refetchStakeTokenBalance();
+        refetchStakedAmount();
+        refetchPendingReward();
+    }, [refetchStakeTokenBalance, refetchStakedAmount, refetchPendingReward]);
+
     useEffect(() => {
         if (isStakeSuccess || isUnstakeSuccess || isClaimSuccess) {
-            console.log('Transaksi berhasil, memuat ulang data...');
-            refetchStakeTokenBalance();
-            refetchStakedAmount();
-            refetchPendingReward();
-            setStakeAmount(''); // Kosongkan input field
+            refetchAllData();
+            setStakeAmount('');
+            toast.custom((t) => (
+                <AnimatePresence >
+                    {t.visible && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -50 }}
+                        >
+                            <Alert variant="success" appearance="outline" className="shadow-lg">
+                                <AlertIcon><RiCheckboxCircleFill /></AlertIcon>
+                                <AlertTitle>Transaction successfully confirmed!</AlertTitle>
+                            </Alert>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            ));
         }
-    }, [isStakeSuccess, isUnstakeSuccess, isClaimSuccess]);
+    }, [isStakeSuccess, isUnstakeSuccess, isClaimSuccess, refetchAllData]);
 
     async function handleStake() {
         if (!stakeAmount || parseFloat(stakeAmount) <= 0) {
-            alert("Masukkan jumlah yang valid");
-            return;
-        }
-
-        try {
+            return toast.custom((t) => (
+                <AnimatePresence >
+                    {t.visible && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -50 }}
+                        >
+                            <Alert variant="warning" appearance="outline" className="shadow-lg">
+                                <AlertIcon><RiErrorWarningFill /></AlertIcon>
+                                <AlertTitle>Enter a valid amount.</AlertTitle>
+                            </Alert>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            ));
+        } try {
             const amountToStake = ethers.parseEther(stakeAmount);
-
             await approveAsync({
                 address: stakeTokenAddress,
                 abi: stakeTokenAbi,
                 functionName: 'approve',
                 args: [stakingAddress, amountToStake],
             });
-
-            alert("Approval berhasil! Sekarang konfirmasi transaksi Stake.");
+            toast.custom((t) => (
+                <AnimatePresence >
+                    {t.visible && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -50 }}
+                        >
+                            <Alert variant="info" appearance="outline" className="shadow-lg">
+                                <AlertIcon><RiCheckboxCircleFill /></AlertIcon>
+                                <AlertTitle>Approval successful! Now confirm the Stake transaction.</AlertTitle>
+                            </Alert>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            ));
             await stakeAsync({
                 address: stakingAddress,
                 abi: stakingAbi,
                 functionName: 'stake',
                 args: [amountToStake],
             });
-
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            alert("Terjadi error. Lihat console untuk detail.");
+            toast.custom((t) => (
+                <AnimatePresence >
+                    {t.visible && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -50 }}
+                        >
+                            <Alert variant="destructive" appearance="outline" className="shadow-lg">
+                                <AlertIcon><RiErrorWarningFill /></AlertIcon>
+                                <AlertTitle>{error.message.includes('User rejected') ? 'Transaction cancelled.' : 'An error occurred.'}</AlertTitle>
+                            </Alert>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            ));
         }
     }
 
+    // useEffect(() => {
+    //     if (!isApproveSuccess) return;
+
+    //     const performStake = async () => {
+    //         try {
+    //             const amount = ethers.parseEther(stakeAmount);
+    //             toast.custom((t) => (
+    //                 <AnimatePresence >
+    //                     {t.visible && (
+    //                         <motion.div
+    //                             initial={{ opacity: 0, y: -50 }}
+    //                             animate={{ opacity: 1, y: 0 }}
+    //                             exit={{ opacity: 0, y: -50 }}
+    //                         >
+    //                             <Alert variant="info" appearance="outline" className="shadow-lg">
+    //                                 <AlertIcon><RiCheckboxCircleFill /></AlertIcon>
+    //                                 <AlertTitle>Approval successful! Confirm to stake...</AlertTitle>
+    //                             </Alert>
+    //                         </motion.div>
+    //                     )}
+    //                 </AnimatePresence>
+    //             ));
+
+    //             await stakeAsync({
+    //                 address: stakingAddress,
+    //                 abi: stakingAbi,
+    //                 functionName: 'stake',
+    //                 args: [amount],
+    //             });
+    //         } catch (error: any) {
+    //             console.error(error);
+    //             toast.custom((t) => (
+    //                 <AnimatePresence >
+    //                     {t.visible && (
+    //                         <motion.div
+    //                             initial={{ opacity: 0, y: -50 }}
+    //                             animate={{ opacity: 1, y: 0 }}
+    //                             exit={{ opacity: 0, y: -50 }}
+    //                         >
+    //                             <Alert variant="destructive" appearance="outline" className="shadow-lg">
+    //                                 <AlertIcon><RiErrorWarningFill /></AlertIcon>
+    //                                 <AlertTitle>{error.message.includes('User rejected') ? 'Transaction cancelled.' : 'An error occurred.'}</AlertTitle>
+    //                             </Alert>
+    //                         </motion.div>
+    //                     )}
+    //                 </AnimatePresence>
+    //             ));
+    //         }
+    //     };
+    //     performStake();
+    // }, [isApproveSuccess, stakeAmount, stakeAsync]);
+
+
     async function handleUnstake() {
         if (!stakeAmount || parseFloat(stakeAmount) <= 0) {
-            alert("Masukkan jumlah yang valid");
-            return;
+            return toast.custom((t) => (
+                <AnimatePresence>
+                    {t.visible && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -50 }}
+                        >
+                            <Alert variant="warning" appearance="outline" className="shadow-lg">
+                                <AlertIcon><RiErrorWarningFill /></AlertIcon>
+                                <AlertTitle>Enter a valid amount.</AlertTitle>
+                            </Alert>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            ));
         }
         try {
             const amountToUnstake = ethers.parseEther(stakeAmount);
@@ -104,9 +232,24 @@ export function StakingUI() {
                 functionName: 'unstake',
                 args: [amountToUnstake],
             });
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            alert("Terjadi error. Lihat console untuk detail.");
+            toast.custom((t) => (
+                <AnimatePresence>
+                    {t.visible && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -50 }}
+                        >
+                            <Alert variant="destructive" appearance="outline" className="shadow-lg">
+                                <AlertIcon><RiErrorWarningFill /></AlertIcon>
+                                <AlertTitle>{error.message.includes('User rejected') ? 'Transaction cancelled.' : 'An error occurred.'}</AlertTitle>
+                            </Alert>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            ));
         }
     }
 
@@ -118,9 +261,24 @@ export function StakingUI() {
                 functionName: 'claimReward',
                 args: [],
             });
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            alert("Terjadi error. Lihat console untuk detail.");
+            toast.custom((t) => (
+                <AnimatePresence>
+                    {t.visible && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -50 }}
+                        >
+                            <Alert variant="destructive" appearance="outline" className="shadow-lg">
+                                <AlertIcon><RiErrorWarningFill /></AlertIcon>
+                                <AlertTitle>{error.message.includes('User rejected') ? 'Transaction cancelled.' : 'An error occurred.'}</AlertTitle>
+                            </Alert>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            ));
         }
     }
 
@@ -200,7 +358,7 @@ export function StakingUI() {
                         </label>
                         <InputGroup>
                             <InputAddon mode="icon">
-                                <Euro />
+                                <RiCopperCoinLine />
                             </InputAddon>
                             <Input
                                 type="number"
@@ -216,14 +374,14 @@ export function StakingUI() {
                         <Button
                             onClick={handleStake}
                             disabled={isInteracting}
-                            className="flex-1 px-5 text-base">
+                            className="flex-1">
                             {isApproving ? 'Approving...' : isConfirmingApprove ? 'Confirming...' : isStaking ? 'Staking...' : isConfirmingStake ? 'Confirming...' : 'Stake'}
                         </Button>
                         <Button
                             onClick={handleUnstake}
                             disabled={isInteracting}
                             variant="destructive"
-                            className="flex-1 px-5 text-base">
+                            className="flex-1">
                             {isUnstaking ? 'Unstaking...' : isConfirmingUnstake ? 'Confirming...' : 'Unstake'}
                         </Button>
                     </div>
