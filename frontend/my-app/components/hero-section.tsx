@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -7,6 +8,7 @@ import { InfiniteSlider } from '@/components/ui/infinite-slider'
 import { ProgressiveBlur } from '@/components/ui/progressive-blur'
 import { TextEffect } from './motion-primitives/text-effect'
 import { AnimatedGroup } from './motion-primitives/animated-group'
+import { handleScroll } from '@/lib/utils'
 
 const transitionVariants = {
     item: {
@@ -71,7 +73,7 @@ export default function HeroSection() {
                                             asChild
                                             size="lg"
                                             className="px-5 text-base">
-                                            <Link href="#link">
+                                            <Link href="#staking" onClick={handleScroll}>
                                                 <span className="text-nowrap">Start Staking</span>
                                             </Link>
                                         </Button>
@@ -81,20 +83,20 @@ export default function HeroSection() {
                                             size="lg"
                                             variant="ghost"
                                             className="px-5 text-base">
-                                            <Link href="#link">
+                                            <Link href="#faq" onClick={handleScroll}>
                                                 <span className="text-nowrap">How It Works</span>
                                             </Link>
                                         </Button>
                                     </div>
                                 </AnimatedGroup>
                             </div>
-                                <Image
-                                    className="-z-10 order-first ml-auto h-56 w-full object-cover invert sm:h-96 lg:absolute lg:inset-0 lg:-right-20 lg:-top-96 lg:order-last lg:h-max lg:w-2/3 lg:object-contain dark:mix-blend-lighten dark:invert-0"
-                                    src="https://ik.imagekit.io/lrigu76hy/tailark/abstract-bg.jpg?updatedAt=1745733473768"
-                                    alt="Abstract Object"
-                                    height="4000"
-                                    width="3000"
-                                />
+                            <Image
+                                className="-z-10 order-first ml-auto h-56 w-full object-cover invert sm:h-96 lg:absolute lg:inset-0 lg:-right-20 lg:-top-96 lg:order-last lg:h-max lg:w-2/3 lg:object-contain dark:mix-blend-lighten dark:invert-0"
+                                src="https://ik.imagekit.io/lrigu76hy/tailark/abstract-bg.jpg?updatedAt=1745733473768"
+                                alt="Abstract Object"
+                                height="4000"
+                                width="3000"
+                            />
                         </div>
                     </div>
                 </section>
