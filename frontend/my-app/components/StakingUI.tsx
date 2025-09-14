@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { ethers } from 'ethers';
 import { useAccount, useBalance, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
-import { stakeTokenAddress, stakeTokenAbi, stakingAddress, stakingAbi, rewardTokenAddress } from '../lib/contracts';
+import { stakeTokenAddress, stakeTokenAbi, stakingAddress, stakingAbi } from '../lib/contracts';
 import { GlowEffect } from './motion-primitives/glow-effect';
 import { Input, InputAddon, InputGroup } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -49,7 +49,7 @@ export function StakingUI() {
     const { data: unstakeHash, isPending: isUnstaking, writeContractAsync: unstakeAsync } = useWriteContract();
     const { data: claimHash, isPending: isClaiming, writeContractAsync: claimAsync } = useWriteContract();
 
-    const { isLoading: isConfirmingApprove, isSuccess, isApproveSuccess } = useWaitForTransactionReceipt({ hash: approveHash });
+    const { isLoading: isConfirmingApprove, } = useWaitForTransactionReceipt({ hash: approveHash });
     const { isLoading: isConfirmingStake, isSuccess: isStakeSuccess } = useWaitForTransactionReceipt({ hash: stakeHash });
     const { isLoading: isConfirmingUnstake, isSuccess: isUnstakeSuccess } = useWaitForTransactionReceipt({ hash: unstakeHash });
     const { isLoading: isConfirmingClaim, isSuccess: isClaimSuccess } = useWaitForTransactionReceipt({ hash: claimHash });
@@ -131,8 +131,9 @@ export function StakingUI() {
                 functionName: 'stake',
                 args: [amountToStake],
             });
-        } catch (error: any) {
+        } catch (error) {
             console.error(error);
+            const errorMessage = error instanceof Error ? error.message : 'An error occurred.';
             toast.custom((t) => (
                 <AnimatePresence >
                     {t.visible && (
@@ -143,7 +144,7 @@ export function StakingUI() {
                         >
                             <Alert variant="destructive" appearance="outline" className="shadow-lg">
                                 <AlertIcon><RiErrorWarningFill /></AlertIcon>
-                                <AlertTitle>{error.message.includes('User rejected') ? 'Transaction cancelled.' : 'An error occurred.'}</AlertTitle>
+                                <AlertTitle>{errorMessage.includes('User rejected') ? 'Transaction cancelled.' : 'An error occurred.'}</AlertTitle>
                             </Alert>
                         </motion.div>
                     )}
@@ -151,59 +152,6 @@ export function StakingUI() {
             ));
         }
     }
-
-    // useEffect(() => {
-    //     if (!isApproveSuccess) return;
-
-    //     const performStake = async () => {
-    //         try {
-    //             const amount = ethers.parseEther(stakeAmount);
-    //             toast.custom((t) => (
-    //                 <AnimatePresence >
-    //                     {t.visible && (
-    //                         <motion.div
-    //                             initial={{ opacity: 0, y: -50 }}
-    //                             animate={{ opacity: 1, y: 0 }}
-    //                             exit={{ opacity: 0, y: -50 }}
-    //                         >
-    //                             <Alert variant="info" appearance="outline" className="shadow-lg">
-    //                                 <AlertIcon><RiCheckboxCircleFill /></AlertIcon>
-    //                                 <AlertTitle>Approval successful! Confirm to stake...</AlertTitle>
-    //                             </Alert>
-    //                         </motion.div>
-    //                     )}
-    //                 </AnimatePresence>
-    //             ));
-
-    //             await stakeAsync({
-    //                 address: stakingAddress,
-    //                 abi: stakingAbi,
-    //                 functionName: 'stake',
-    //                 args: [amount],
-    //             });
-    //         } catch (error: any) {
-    //             console.error(error);
-    //             toast.custom((t) => (
-    //                 <AnimatePresence >
-    //                     {t.visible && (
-    //                         <motion.div
-    //                             initial={{ opacity: 0, y: -50 }}
-    //                             animate={{ opacity: 1, y: 0 }}
-    //                             exit={{ opacity: 0, y: -50 }}
-    //                         >
-    //                             <Alert variant="destructive" appearance="outline" className="shadow-lg">
-    //                                 <AlertIcon><RiErrorWarningFill /></AlertIcon>
-    //                                 <AlertTitle>{error.message.includes('User rejected') ? 'Transaction cancelled.' : 'An error occurred.'}</AlertTitle>
-    //                             </Alert>
-    //                         </motion.div>
-    //                     )}
-    //                 </AnimatePresence>
-    //             ));
-    //         }
-    //     };
-    //     performStake();
-    // }, [isApproveSuccess, stakeAmount, stakeAsync]);
-
 
     async function handleUnstake() {
         if (!stakeAmount || parseFloat(stakeAmount) <= 0) {
@@ -232,8 +180,9 @@ export function StakingUI() {
                 functionName: 'unstake',
                 args: [amountToUnstake],
             });
-        } catch (error: any) {
+        } catch (error) {
             console.error(error);
+            const errorMessage = error instanceof Error ? error.message : 'An error occurred.';
             toast.custom((t) => (
                 <AnimatePresence>
                     {t.visible && (
@@ -244,7 +193,7 @@ export function StakingUI() {
                         >
                             <Alert variant="destructive" appearance="outline" className="shadow-lg">
                                 <AlertIcon><RiErrorWarningFill /></AlertIcon>
-                                <AlertTitle>{error.message.includes('User rejected') ? 'Transaction cancelled.' : 'An error occurred.'}</AlertTitle>
+                                <AlertTitle>{errorMessage.includes('User rejected') ? 'Transaction cancelled.' : 'An error occurred.'}</AlertTitle>
                             </Alert>
                         </motion.div>
                     )}
@@ -261,8 +210,9 @@ export function StakingUI() {
                 functionName: 'claimReward',
                 args: [],
             });
-        } catch (error: any) {
+        } catch (error) {
             console.error(error);
+            const errorMessage = error instanceof Error ? error.message : 'An error occurred.';
             toast.custom((t) => (
                 <AnimatePresence>
                     {t.visible && (
@@ -273,7 +223,7 @@ export function StakingUI() {
                         >
                             <Alert variant="destructive" appearance="outline" className="shadow-lg">
                                 <AlertIcon><RiErrorWarningFill /></AlertIcon>
-                                <AlertTitle>{error.message.includes('User rejected') ? 'Transaction cancelled.' : 'An error occurred.'}</AlertTitle>
+                                <AlertTitle>{errorMessage.includes('User rejected') ? 'Transaction cancelled.' : 'An error occurred.'}</AlertTitle>
                             </Alert>
                         </motion.div>
                     )}
