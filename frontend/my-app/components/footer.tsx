@@ -1,5 +1,7 @@
+'use client'
 import { Logo } from '@/components/logo'
 import Link from 'next/link'
+import { handleScroll } from '@/lib/utils'
 
 const links = [
     {
@@ -36,6 +38,7 @@ export default function FooterSection() {
                         <Link
                             key={index}
                             href={link.href}
+                            onClick={handleScroll}
                             className="text-muted-foreground hover:text-primary block duration-150">
                             <span>{link.title}</span>
                         </Link>

@@ -2,9 +2,9 @@
 import Link from 'next/link'
 import { Logo } from '@/components/logo'
 import { Menu, X } from 'lucide-react'
-// import { Button } from '@/components/ui/button'
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import React from 'react'
+import { handleScroll } from '@/lib/utils'
 
 const menuItems = [
     { name: 'Features', href: '#features' },
@@ -44,6 +44,7 @@ export const HeroHeader = () => {
                                         <li key={index}>
                                             <Link
                                                 href={item.href}
+                                                onClick={handleScroll}
                                                 className="text-muted-foreground hover:text-accent-foreground block duration-150">
                                                 <span>{item.name}</span>
                                             </Link>
@@ -60,6 +61,7 @@ export const HeroHeader = () => {
                                         <li key={index}>
                                             <Link
                                                 href={item.href}
+                                                onClick={handleScroll}
                                                 className="text-muted-foreground hover:text-accent-foreground block duration-150">
                                                 <span>{item.name}</span>
                                             </Link>

@@ -5,6 +5,28 @@ import Image from 'next/image'
 import { HeroHeader } from '@/components/header'
 import { InfiniteSlider } from '@/components/ui/infinite-slider'
 import { ProgressiveBlur } from '@/components/ui/progressive-blur'
+import { TextEffect } from './motion-primitives/text-effect'
+import { AnimatedGroup } from './motion-primitives/animated-group'
+
+const transitionVariants = {
+    item: {
+        hidden: {
+            opacity: 0,
+            filter: 'blur(12px)',
+            y: 12,
+        },
+        visible: {
+            opacity: 1,
+            filter: 'blur(0px)',
+            y: 0,
+            transition: {
+                type: 'spring',
+                bounce: 0.3,
+                duration: 1.5,
+            },
+        },
+    },
+}
 
 export default function HeroSection() {
     return (
@@ -15,37 +37,64 @@ export default function HeroSection() {
                     <div className="pb-24 pt-12 md:pb-32 lg:pb-56 lg:pt-44">
                         <div className="relative mx-auto flex max-w-6xl flex-col px-6 lg:block">
                             <div className="mx-auto max-w-lg text-center lg:ml-0 lg:w-1/2 lg:text-left">
-                                <h1 className="mt-8 max-w-2xl text-balance text-5xl font-medium md:text-6xl lg:mt-16 xl:text-7xl">Grow Your Digital Assets, Automatically</h1>
-                                <p className="mt-8 max-w-2xl text-pretty text-lg">Connect your wallet, stake your tokens, and watch your rewards grow in real-time, every second.</p>
-
-                                <div className="mt-12 flex flex-col items-center justify-center gap-2 sm:flex-row lg:justify-start">
-                                    <Button
-                                        asChild
-                                        size="lg"
-                                        className="px-5 text-base">
-                                        <Link href="#link">
-                                            <span className="text-nowrap">Start Staking</span>
-                                        </Link>
-                                    </Button>
-                                    <Button
-                                        key={2}
-                                        asChild
-                                        size="lg"
-                                        variant="ghost"
-                                        className="px-5 text-base">
-                                        <Link href="#link">
-                                            <span className="text-nowrap">How It Works</span>
-                                        </Link>
-                                    </Button>
-                                </div>
+                                <TextEffect
+                                    preset="fade-in-blur"
+                                    speedSegment={0.3}
+                                    as="h1"
+                                    className="mt-8 max-w-2xl text-balance text-5xl font-medium md:text-6xl lg:mt-16 xl:text-7xl">
+                                    Grow Your Digital Assets, Automatically
+                                </TextEffect>
+                                <TextEffect
+                                    per="line"
+                                    preset="fade-in-blur"
+                                    speedSegment={0.3}
+                                    delay={0.5}
+                                    as="p"
+                                    className="mt-8 max-w-2xl text-pretty text-lg">
+                                    Connect your wallet, stake your tokens, and watch your rewards grow in real-time, every second.
+                                </TextEffect>
+                                <AnimatedGroup
+                                    variants={{
+                                        container: {
+                                            visible: {
+                                                transition: {
+                                                    staggerChildren: 0.05,
+                                                    delayChildren: 0.75,
+                                                },
+                                            },
+                                        },
+                                        ...transitionVariants,
+                                    }}
+                                >
+                                    <div className="mt-12 flex flex-col items-center justify-center gap-2 sm:flex-row lg:justify-start">
+                                        <Button
+                                            asChild
+                                            size="lg"
+                                            className="px-5 text-base">
+                                            <Link href="#link">
+                                                <span className="text-nowrap">Start Staking</span>
+                                            </Link>
+                                        </Button>
+                                        <Button
+                                            key={2}
+                                            asChild
+                                            size="lg"
+                                            variant="ghost"
+                                            className="px-5 text-base">
+                                            <Link href="#link">
+                                                <span className="text-nowrap">How It Works</span>
+                                            </Link>
+                                        </Button>
+                                    </div>
+                                </AnimatedGroup>
                             </div>
-                            <Image
-                                className="-z-10 order-first ml-auto h-56 w-full object-cover invert sm:h-96 lg:absolute lg:inset-0 lg:-right-20 lg:-top-96 lg:order-last lg:h-max lg:w-2/3 lg:object-contain dark:mix-blend-lighten dark:invert-0"
-                                src="https://ik.imagekit.io/lrigu76hy/tailark/abstract-bg.jpg?updatedAt=1745733473768"
-                                alt="Abstract Object"
-                                height="4000"
-                                width="3000"
-                            />
+                                <Image
+                                    className="-z-10 order-first ml-auto h-56 w-full object-cover invert sm:h-96 lg:absolute lg:inset-0 lg:-right-20 lg:-top-96 lg:order-last lg:h-max lg:w-2/3 lg:object-contain dark:mix-blend-lighten dark:invert-0"
+                                    src="https://ik.imagekit.io/lrigu76hy/tailark/abstract-bg.jpg?updatedAt=1745733473768"
+                                    alt="Abstract Object"
+                                    height="4000"
+                                    width="3000"
+                                />
                         </div>
                     </div>
                 </section>

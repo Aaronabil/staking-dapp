@@ -10,3 +10,15 @@ import { twMerge } from 'tailwind-merge';
 export function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs));
 }
+
+export const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  e.preventDefault();
+  const href = e.currentTarget.href;
+  const targetId = href.replace(/.*\#/, "");
+  const elem = document.getElementById(targetId);
+  if (elem) {
+    elem.scrollIntoView({
+      behavior: 'smooth',
+    });
+  }
+};
