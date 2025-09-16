@@ -3,8 +3,7 @@ import { type SVGProps } from 'react'
 export default function Rabbywallet(props: SVGProps<SVGSVGElement>) {
     return (
         <svg
-            width="32px"
-            height="32px"
+            className="w-8 h-8"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 204 152"
             {...props}

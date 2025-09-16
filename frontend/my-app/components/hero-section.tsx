@@ -185,6 +185,16 @@ export default function HeroSection() {
                                             width="auto"
                                         />
                                     </div>
+
+                                    <div className="flex">
+                                        <img
+                                            className="mx-auto h-6 w-fit dark:invert"
+                                            src="https://github.com/Aaronabil/staking-dapp/blob/main/frontend/my-app/public/frontend/my-app/public/alchemyseeklogo.svg?raw=true"
+                                            alt="Alchemy Logo"
+                                            height="24"
+                                            width="auto"
+                                        />
+                                    </div>
                                 </InfiniteSlider>
 
                                 <div className="bg-linear-to-r from-background absolute inset-y-0 left-0 w-20"></div>

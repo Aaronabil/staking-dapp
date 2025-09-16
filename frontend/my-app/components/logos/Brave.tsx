@@ -3,8 +3,8 @@ import { type SVGProps } from 'react';
 export default function Brave(props: SVGProps<SVGSVGElement>) {
     return (
         <svg
-            width="64px"
-            height="64px"
+            width="1em"
+            height="1em"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 56 64"
             {...props}
